@@ -1,6 +1,6 @@
 # AWS-recommendation-papers
 
-This is the repository of the survey paper "**A Survey on Neural Recommendation: From Collaborative Filtering to Content and Context Enriched Recommendation**" submitted in IEEE Transactions on Knowledge and Data Engineering
+This is the repository of the survey paper "**A Survey on Neural Recommendation: From Collaborative Filtering to Information-rich Recommendation**" submitted in IEEE Transactions on Knowledge and Data Engineering
 
 ## Summarization of representation learning approaches for CF
 ### Classical Matrix Factorization
